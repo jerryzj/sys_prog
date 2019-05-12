@@ -2,7 +2,10 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/random.h>
-#include <stdint.h>
+
+
+//typedef int int32_t;
+//typedef long int64_t;
 
 const int64_t MAX_ITER = 1e6;
 const int64_t STRIDE   = 1e3;
@@ -26,7 +29,7 @@ static int __init fp_eval_init (void) {
     int32_t a, b, c;
     a = x;
     b = y;  
-#else                
+#elif FP                
     float a, b, c;
     a = (float) x;
     b = (float) y;
@@ -34,7 +37,7 @@ static int __init fp_eval_init (void) {
 
     for(int i = 0; i < MAX_ITER; i += STRIDE) {
         start_time = ktime_get_ns();
-        for(j = 0; j < i; ++j){
+        for(int j = 0; j < i; ++j){
             c = a * b;
         }
         end_time = ktime_get_ns();
