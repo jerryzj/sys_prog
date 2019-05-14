@@ -3,11 +3,7 @@
 #include <linux/kernel.h>
 #include <linux/random.h>
 
-
-//typedef int int32_t;
-//typedef long int64_t;
-
-const int64_t MAX_ITER = 1e6;
+const int64_t MAX_ITER = 1e7;
 const int64_t STRIDE   = 1e3;
 
 MODULE_LICENSE("GPL");
@@ -19,6 +15,13 @@ static int __init fp_eval_init (void) {
     __kernel_time64_t start_time, end_time;
     int x = 0;
     int y = 0;
+#ifdef INT
+    int32_t a, b, c;
+#elif FP
+    float a, b, c;
+#endif
+    start_time = 0;
+    end_time = 0;
     
     while (x ==0 || y ==0) {
         get_random_bytes(&x, sizeof(x));
@@ -26,13 +29,11 @@ static int __init fp_eval_init (void) {
     }
     
 #ifdef INT            
-    int32_t a, b, c;
     a = x;
     b = y;  
 #elif FP                
-    float a, b, c;
-    a = (float) x;
-    b = (float) y;
+    a = (float) x + (float) 1.0 / y;
+    b = (float) x + (float) 1.0 / y;
 #endif
 
     for(int i = 0; i < MAX_ITER; i += STRIDE) {

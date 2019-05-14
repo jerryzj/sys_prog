@@ -3,7 +3,7 @@ KDIR = /lib/modules/$(shell uname -r)/build
 
 MODULE_NAME = fp_perf
 obj-m := $(MODULE_NAME).o
-ccflags-y := -Wall -std=gnu99 -mhard-float
+ccflags-y := -O0 -Wall -std=gnu99  -msse2
 
 all: clean int_perf fp_perf
 	gnuplot plot.gp
